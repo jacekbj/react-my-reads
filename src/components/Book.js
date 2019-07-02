@@ -1,18 +1,18 @@
 import React from 'react';
-import { BookShelfChanger } from './BookShelfChanger';
 
-export const Book = ({ url, category, title, authors}) => {
+export const Book = ({ book, children }) => {
+	const { imageLinks, title, authors} = book;
 	const styles = {
 		width: 128,
 		height: 193,
-		backgroundImage: `url('${url}')`,
+		backgroundImage: `url('${imageLinks.thumbnail}')`,
 	};
 
 	return (
 		<div className="book">
 			<div className="book-top">
 				<div className="book-cover" style={styles}></div>
-				<BookShelfChanger category={category}/>
+				{children}
 			</div>
 			<div className="book-title">{title}</div>
 			<div className="book-authors">{authors}</div>
