@@ -1,8 +1,10 @@
 import React from 'react';
 import { Book } from './Book';
 import { BookshelfChanger } from './BookshelfChanger';
+import { connect } from 'react-redux';
+import {updateShelf} from '../actions';
 
-export const Bookshelf = ({shelfId, shelves, books}) => {
+const comp = ({shelfId, shelves, books, update}) => {
 	const shelfName = shelves.filter(shelf => shelf.id === shelfId)[0].name;
 
 	return (
@@ -12,11 +14,12 @@ export const Bookshelf = ({shelfId, shelves, books}) => {
 				<ol className="books-grid">
 					{books.map(book => {
 						return (
-							<li key={book.title}>
+							<li key={book.id}>
 								<Book book={book}>
 									<BookshelfChanger
 										shelves={shelves}
 										shelfId={shelfId}
+										update={(shelf) => update(book.id, shelf)}
 									/>
 								</Book>
 							</li>
@@ -27,3 +30,10 @@ export const Bookshelf = ({shelfId, shelves, books}) => {
 		</div>
 	)
 };
+
+export const Bookshelf = connect(
+	null,
+	(dispatch) => ({
+		update: (bookId, shelf) => dispatch(updateShelf(bookId, shelf)),
+	}),
+)(comp);

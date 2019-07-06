@@ -6,7 +6,10 @@ export const BookshelfChanger = (props) => {
 	));
 	return (
 		<div className="book-shelf-changer">
-			<select defaultValue={props.shelfId}>
+			<select
+				defaultValue={props.shelfId}
+				onChange={(event) => props.update(event.target.value)}
+			>
 				<option value="move" disabled>Move to...</option>
 				{shelves}
 			</select>
